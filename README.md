@@ -95,6 +95,19 @@ counts: {'reward': 1000}
 
 ![run_gridworld_aif_vs_random](run_gridworld_aif_vs_random.png)
 
+4. ### Live demo (dynamic window)
+
+```bash
+python run_gridworld_live_demo.py --episodes-random 4 --episodes-aif 3 --fps 12 --seed 58457
+[RANDOM] Episode 1: return=1.00, steps=184
+[RANDOM] Episode 2: return=1.00, steps=31
+[RANDOM] Episode 3: return=1.00, steps=24
+[RANDOM] Episode 4: return=0.00, steps=200
+[AIF] Episode 1: return=1.00, steps=11
+[AIF] Episode 2: return=1.00, steps=10
+[AIF] Episode 3: return=1.00, steps=15
+```
+
 
 
 
