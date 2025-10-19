@@ -46,8 +46,11 @@ pip install pymdp             # if available in your index
 # pip install git+https://github.com/infer-actively/pymdp.git
 ```
 
-If `pymdp` API differs across versions, the code includes small compatibility shims (e.g., scalar vs list observations, `sample_action()` return types).
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If `pymdp` API differs across versions, the code includes small compatibility shims (e.g., scalar vs list observations, `sample_action()` return types).
 
+## Quick Start
 
+1. ### To run a minimal environment smoke test run the following command `python run_gridworld_human.py` ![](run_gridworld_human.mp4)
+2. ### 
 
 
