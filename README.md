@@ -52,7 +52,10 @@ pip install pymdp             # if available in your index
 
 1. ### To run a minimal environment smoke test run the following command `python run_gridworld_human.py` ![](run_gridworld_human.mp4)
 
-https://github.com/user-attachments/assets/c61f2118-13a9-4ffa-a31b-eabc1de233f9
+<video src="https://github.com/user-attachments/assets/c61f2118-13a9-4ffa-a31b-eabc1de233f9" 
+       width="30%" 
+       loop>
+</video>
 
 
 
