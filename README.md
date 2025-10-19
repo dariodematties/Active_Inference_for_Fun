@@ -57,6 +57,21 @@ pip install pymdp             # if available in your index
        loop>
 </video>
 
+2. ### Batch statistics (random baseline)
+
+```bash
+python run_gridworld_stats.py --episodes 2000
+
+Episodes:        2000
+Success rate:    0.429
+Punish rate:     0.455
+Timeout rate:    0.117
+Avg return:      -0.025
+Avg steps:       91.95
+```
+![run_gridworld_stats](run_gridworld_stats.png)
+
+
 
 
 
