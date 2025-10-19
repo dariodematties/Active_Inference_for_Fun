@@ -1,4 +1,4 @@
-# Active_Inference_for_Fun
+# Active Inference for Fun
 
 Tiny, transparent experiments in **Active Inference** using [pymdp](https://github.com/infer-actively/pymdp?utm_source=chatgpt.com) and [gymnasium](https://gymnasium.farama.org/).
 
