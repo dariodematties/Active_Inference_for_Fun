@@ -71,6 +71,30 @@ Avg steps:       91.95
 ```
 ![run_gridworld_stats](run_gridworld_stats.png)
 
+3. ### AIF vs Random (with optional parallelism)
+
+```bash
+python run_gridworld_aif_vs_random.py --episodes 1000 --workers 40
+
+=== Summary (Random) ===
+ success_rate: 0.431
+  punish_rate: 0.455
+ timeout_rate: 0.114
+   avg_return: -0.024
+    avg_steps: 91.964
+counts: {'reward': 431, 'timeout': 114, 'punish': 455}
+
+=== Summary (AIF) ===
+ success_rate: 1.0
+  punish_rate: 0.0
+ timeout_rate: 0.0
+   avg_return: 1.0
+    avg_steps: 33.08
+counts: {'reward': 1000}
+```
+
+![run_gridworld_aif_vs_random](run_gridworld_aif_vs_random.png)
+
 
 
 
