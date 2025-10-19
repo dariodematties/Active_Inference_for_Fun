@@ -108,6 +108,8 @@ python run_gridworld_live_demo.py --episodes-random 4 --episodes-aif 3 --fps 12 
 [AIF] Episode 3: return=1.00, steps=15
 ```
 
+https://github.com/user-attachments/assets/f199d457-7d89-4c75-bcbe-2354d41181f9
+
 
 
 
