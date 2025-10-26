@@ -125,7 +125,7 @@ def main():
     )
 
     # Build AIF agent
-    agent, _ = build_gridworld_agent(
+    agent, _, _ = build_gridworld_agent(
         n_rows=args.rows, n_cols=args.cols,
         reward_pos=reward_pos, punish_pos=punish_pos,
         start_pos=start_pos,

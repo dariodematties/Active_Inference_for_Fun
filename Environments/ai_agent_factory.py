@@ -13,31 +13,35 @@ def build_gridworld_agent(
     policy_len: int = 4,
     gamma: float = 16.0,
     action_selection: str = "stochastic",
+    sophisticated: bool = False,   # <-- NEW
 ):
     """
-    Minimal Active Inference agent for an N×M fully-observable GridWorld.
+    Build a fully-observable Active Inference agent for GridWorld.
+    Set sophisticated=True to request sophisticated inference (if supported by pymdp).
+
     Returns:
-        agent: pymdp.agent.Agent instance
-        model: dict with A, B, C, D and small helpers
+        agent : pymdp.agent.Agent
+        model : dict with A,B,C,D and helpers
+        controls: dict with 'infer_policies' wrapper (uses sophisticated mode if available)
     """
-    S = n_rows * n_cols                     # hidden states (positions)
-    O = S                                   # observations (positions)
-    U = 4                                   # actions: 0=up,1=right,2=down,3=left
+    S = n_rows * n_cols
+    O = S
+    U = 4
 
     def pos_to_idx(r: int, c: int) -> int:
         return r * n_cols + c
 
     def clip_move(r: int, c: int, u: int) -> tuple[int, int]:
-        if u == 0: r = max(0, r - 1)                 # up
-        elif u == 1: c = min(n_cols - 1, c + 1)      # right
-        elif u == 2: r = min(n_rows - 1, r + 1)      # down
-        elif u == 3: c = max(0, c - 1)               # left
+        if u == 0: r = max(0, r - 1)           # up
+        elif u == 1: c = min(n_cols - 1, c + 1)# right
+        elif u == 2: r = min(n_rows - 1, r + 1)# down
+        elif u == 3: c = max(0, c - 1)         # left
         return r, c
 
-    # --- A: observation model p(o|s) (O×S) — fully observable → identity ---
+    # A: identity (obs == state)
     A = np.eye(O, S, dtype=np.float64)
 
-    # --- B: transition model p(s'|s,u) (S×S×U), column-stochastic per (s,u) ---
+    # B: deterministic transitions (S x S x U)
     B = np.zeros((S, S, U), dtype=np.float64)
     for s_prev in range(S):
         r, c = divmod(s_prev, n_cols)
@@ -45,47 +49,81 @@ def build_gridworld_agent(
             r2, c2 = clip_move(r, c, u)
             s_next = pos_to_idx(r2, c2)
             B[s_next, s_prev, u] = 1.0
-    # sanity: columns should sum to 1 for each action
-    # B.sum(axis=0) -> shape (S, U), all ones
 
-    # --- C: prior preferences over outcomes (length O) ---
+    # C: outcome preferences over observations
     C = np.zeros(O, dtype=np.float64)
-    reward_idx = pos_to_idx(*reward_pos)
-    punish_idx = pos_to_idx(*punish_pos)
-    C[reward_idx] = c_reward
-    C[punish_idx] = c_punish
-    # (Interpreted as utilities or log-preferences depending on pymdp version.)
+    C[pos_to_idx(*reward_pos)] = c_reward
+    C[pos_to_idx(*punish_pos)] = c_punish
 
-    # --- D: prior over initial hidden state (length S) ---
+    # D: prior over initial state
     if start_pos is not None:
-        start_idx = pos_to_idx(*start_pos)
-        D = np.zeros(S, dtype=np.float64); D[start_idx] = 1.0
+        D = np.zeros(S, dtype=np.float64)
+        D[pos_to_idx(*start_pos)] = 1.0
     else:
         D = np.ones(S, dtype=np.float64)
-        D[[reward_idx, punish_idx]] = 0.0
+        D[[pos_to_idx(*reward_pos), pos_to_idx(*punish_pos)]] = 0.0
         D /= D.sum()
 
-    # --- Build Agent (handle slight API differences across pymdp versions) ---
-    try:
-        # newer style with kwargs and action_selection/gamma
-        agent = Agent(
-            A=A, B=B, C=C, D=D,
-            policy_len=policy_len,
-            gamma=gamma,
-            action_selection=action_selection,
-        )
-    except TypeError:
-        # older style: positional args and fewer kwargs
-        agent = Agent(A, B, C, D, policy_len=policy_len)
-        # try to set attributes if present
-        if hasattr(agent, "gamma"):
-            agent.gamma = gamma
-        if hasattr(agent, "action_selection"):
-            agent.action_selection = action_selection
+    # --- Instantiate Agent with broad compatibility ---
+    agent = None
+    err = None
+    for ctor in (
+        # try passing everything, including the new flag
+        lambda: Agent(A=A, B=B, C=C, D=D,
+                      policy_len=policy_len, gamma=gamma,
+                      action_selection=action_selection,
+                      sophisticated=sophisticated),
+        # without 'sophisticated' kw
+        lambda: Agent(A=A, B=B, C=C, D=D,
+                      policy_len=policy_len, gamma=gamma,
+                      action_selection=action_selection),
+        # positional fallback
+        lambda: Agent(A, B, C, D, policy_len=policy_len),
+    ):
+        try:
+            agent = ctor()
+            break
+        except TypeError as e:
+            err = e
+    if agent is None:
+        raise TypeError(f"Could not construct pymdp.Agent with provided arguments: {err}")
+
+    # Try to set sophisticated mode post-hoc if attribute exists
+    for attr in ("sophisticated", "use_sophisticated_inference", "sophisticated_inference"):
+        if hasattr(agent, attr):
+            try:
+                setattr(agent, attr, bool(sophisticated))
+            except Exception:
+                pass
+
+    # --- Small control wrapper so your loop can request the right policy update ---
+    def infer_policies_wrapper():
+        """
+        Call the appropriate policy inference.
+        Uses 'mode'/'method' kw if supported; otherwise falls back to default.
+        """
+        # common patterns across pymdp versions:
+        for kw in ({"mode": "sophisticated"}, {"method": "sophisticated"}):
+            if sophisticated:
+                try:
+                    agent.infer_policies(**kw)
+                    return
+                except TypeError:
+                    pass
+        # classical or fallback
+        agent.infer_policies()
 
     model = {
         "A": A, "B": B, "C": C, "D": D,
-        "reward_idx": reward_idx, "punish_idx": punish_idx,
         "pos_to_idx": pos_to_idx,
+        "reward_idx": pos_to_idx(*reward_pos),
+        "punish_idx": pos_to_idx(*punish_pos),
     }
-    return agent, model
+    controls = {
+        "infer_policies": infer_policies_wrapper,
+        "sophisticated": sophisticated,
+        "policy_len": policy_len,
+        "gamma": gamma,
+        "action_selection": action_selection,
+    }
+    return agent, model, controls
