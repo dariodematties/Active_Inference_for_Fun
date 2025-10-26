@@ -148,6 +148,30 @@ counts: {'reward': 1640, 'timeout': 360}
 
 ![run_gridworld_aif_vs_random2](run_gridworld_aif_vs_random2.png)
 
+4. ### AIF vs Random with observations noise (with optional parallelism)
+
+```bash
+python run_gridworld_obs_noise.py --workers 10 --episodes 1000
+
+=== Summary (Random) ===
+ success_rate: 0.408
+  punish_rate: 0.453
+ timeout_rate: 0.139
+   avg_return: -0.045
+    avg_steps: 94.594
+counts: {'reward': 408, 'timeout': 139, 'punish': 453}
+
+=== Summary (AIF, noisy A) ===
+ success_rate: 1.0
+  punish_rate: 0.0
+ timeout_rate: 0.0
+   avg_return: 1.0
+    avg_steps: 33.41
+counts: {'reward': 1000}
+ belief_error_ratio (mean over episodes): 0.917
+```
+
+![run_gridworld_aif_vs_random3](run_gridworld_aif_vs_random3.png)
 
 
 4. ### Live demo (dynamic window)
