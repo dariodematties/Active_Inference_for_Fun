@@ -174,6 +174,33 @@ counts: {'reward': 1000}
 ![run_gridworld_aif_vs_random3](run_gridworld_aif_vs_random3.png)
 
 
+```bash
+python run_gridworld_obs_noise.py --workers 20 --episodes 1000 --cols 10 --rows 10 --reward-pos "9, 9" --punish-pos "0, 9"
+
+=== Summary (Random) ===
+ success_rate: 0.189
+  punish_rate: 0.259
+ timeout_rate: 0.552
+   avg_return: -0.07
+    avg_steps: 161.987
+counts: {'timeout': 552, 'reward': 189, 'punish': 259}
+
+=== Summary (AIF, noisy A) ===
+ success_rate: 0.52
+  punish_rate: 0.06
+ timeout_rate: 0.42
+   avg_return: 0.46
+    avg_steps: 153.3
+counts: {'reward': 520, 'timeout': 420, 'punish': 60}
+ belief_error_ratio (mean over episodes): 0.985
+```
+
+![run_gridworld_aif_vs_random4](run_gridworld_aif_vs_random4.png)
+
+
+
+
+
 4. ### Live demo (dynamic window)
 
 ```bash
