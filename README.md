@@ -6,6 +6,74 @@ Start from the **simplest possible** environments and agents, then add complexit
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Goal: a **parsimonious, scientifically minded** playground to study cognition, building up difficulty “evolutionarily” (fully observable → partially observable; single factor → multi-factor; single modality → multi-modal; deterministic → noisy; etc.).
 
+
+
+# Active Inference Formulation Notes
+
+## Free Energy
+
+### Variational Free Energy
+
+Variational Free Energy starts with the following expression:
+
+$$
+\begin{aligned}
+F_{\pi} & = \mathbb{E}_{q(s|\pi)} \left[\ln{\frac{q(s|\pi)}{p(o,s|\pi)}}\right] \\
+& = \mathbb{E}_{q(s|\pi)} \left[\ln{q(s|\pi)} - \ln{p(o,s|\pi)}\right] \\
+& = \mathbb{E}_{q(s|\pi)} \left[\ln{q(s|\pi)} - \ln{p(s|\pi)}\right] - \mathbb{E}_{q(s|\pi)} \left[\ln{p(o|s,\pi)}\right] \\
+& = D_{KL}\left[q(s|\pi) || p(s|\pi)\right] - \mathbb{E}_{q(s|\pi)} \left[\ln{p(o|s,\pi)}\right]
+\end{aligned}
+$$
+
+Let us extract the meaning of the Variational Free Energy.
+
+The following expression is the **Complexity term**, which is the penalty for moving far from prior beliefs:
+
+$$
+D_{KL}\left[q(s|\pi) || p(s|\pi)\right]
+$$
+
+And the following one is the **Accuracy term**, which tells us how well the model predicts current observations:
+
+$$
+\mathbb{E}_{q(s|\pi)} \left[-\ln{p(o|s,\pi)}\right]
+$$
+
+---
+
+### Expected Free Energy
+
+Expected Free Energy starts with the following expression:
+
+$$
+\begin{aligned}
+G_{\pi} &= \mathbb{E}_{q(o, s|\pi)} \left[\ln{\frac{q(s|\pi)}{p(o,s|\pi)}}\right] \\
+&= \mathbb{E}_{q(o, s|\pi)} \left[\ln{q(s|\pi)} - \ln{p(o,s|\pi)}\right] \\
+&= \mathbb{E}_{q(o, s|\pi)} \left[\ln{q(s|\pi)} - \ln{p(s|o, \pi)}\right] - \mathbb{E}_{q(o|\pi)} \left[\ln{p(o|\pi)}\right] \\
+&\approx \mathbb{E}_{q(o, s|\pi)} \left[\ln{q(s|\pi)} - \ln{q(s|o, \pi)}\right] - \mathbb{E}_{q(o|\pi)} \left[\ln{p(o|C)}\right] \\
+&= -\mathbb{E}_{q(o, s|\pi)} \left[\ln{q(s|o, \pi)} - \ln{q(s|\pi)}\right] - \mathbb{E}_{q(o|\pi)} \left[\ln{p(o|C)}\right] \\
+&= -\mathbb{E}_{q(s|o,\pi)q(o|\pi)} \left[\ln{q(s|o, \pi)} - \ln{q(s|\pi)}\right] - \mathbb{E}_{q(o|\pi)} \left[\ln{p(o|C)}\right] \\
+&= -\mathbb{E}_{q(o|\pi)} \left[ \mathbb{E}_{q(s|o,\pi)} \left[\ln{q(s|o, \pi)} - \ln{q(s|\pi)}\right] \right] - \mathbb{E}_{q(o|\pi)} \left[\ln{p(o|C)}\right] \\
+&= -\mathbb{E}_{q(o|\pi)} \left[D_{KL}\left[q(s|o,\pi) || q(s|\pi)\right] \right] - \mathbb{E}_{q(o|\pi)} \left[\ln{p(o|C)}\right]
+\end{aligned}
+$$
+
+Let us extract the meaning from the Expected Free Energy expression.
+
+The following term is the **Extrinsic (utility term)**, which measures how much the predicted outcomes \(O\) deviate from preferred outcomes encoded in \(p(o)\) (which comes from the \(C\) matrix). If \(p(o)\) is high for some outcomes, policies leading to those outcomes have lower risk. It is **goal-directed** — the instrumental part of planning.
+
+$$
+\mathbb{E}_{q(o|\pi)} \left[-\ln{p(o|C)}\right]
+$$
+
+The following term is the **Epistemic (state information gain)**, which measures how much the agent expects to learn about hidden states \(s\) from future observations under policy \(\pi\). It is high when predicted observations would strongly reduce uncertainty about the hidden causes of sensory input. It is **curiosity-driven** — the exploratory part of planning.
+
+$$
+\mathbb{E}_{q(o|\pi)} \left[D_{KL}\left[q(s|o,\pi) || q(s|\pi)\right] \right]
+$$
+
+
+
 ## Contents
 
 - Minimal `N×M` **GridWorld** (deterministic walls, reward cell, punish cell)
@@ -14,6 +82,7 @@ Start from the **simplest possible** environments and agents, then add complexit
 - Batch **experiments & plots** (random vs AIF; sequential & parallel)
 - Live demo: watch random episodes then AIF episodes in one window
 - Roadmap: POMDP variants, multi-factor control, multi-modal outcomes, learning
+
 
 ## Repository Structure
 
