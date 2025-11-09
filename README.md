@@ -328,3 +328,11 @@ Lets unfold this in more detail.
     . We compute $\mathbb{E}_{q(o)}[−ln ⁡p(o∣C)]$.
 
     . Unless our preferences $p(o∣C)$ put probability $\sim{1}$ on the actually observed outcome at every step, this expectation is **positive**. That’s why our utility bar moves, while the others don’t.
+
+
+#### **How to make the other bars move (and why)**
+
+If we want non-zero **Complexity**, **Accuracy**, **Epistemic**, we have to introduce mismatch or uncertainty:
+
+. $\textbf{Accuracy} > 0$ (likelihood cost):
+    . We have to add observation noise: `--a-noise 0.2` (so $\textbf{A}$ not identity).
