@@ -334,5 +334,13 @@ Lets unfold this in more detail.
 
 If we want non-zero **Complexity**, **Accuracy**, **Epistemic**, we have to introduce mismatch or uncertainty:
 
-. $\textbf{Accuracy} > 0$ (likelihood cost):
-    . We have to add observation noise: `--a-noise 0.2` (so $\textbf{A}$ not identity).
+. $\textbf{Accuracy} > 0$ (likelihood cost): We have to add observation noise: `--a-noise 0.2` (so $\textbf{A}$ not identity).
+
+```shell
+python run_gridworld_live_metrics.py --fps 10 --a-noise 0.2
+[Episode 1] return=1.00, steps=24
+[Episode 2] return=1.00, steps=16
+[Episode 3] return=1.00, steps=10
+All episodes complete: [(1.0, 24), (1.0, 16), (1.0, 10)]
+```
+![run_gridworld_live_metrics1](run_gridworld_live_metrics1.png)
