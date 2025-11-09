@@ -324,3 +324,7 @@ Lets unfold this in more detail.
     . **Epistemic** (1-step info gain) vanishes: for each possible $o, {q(s⁣∣o)}\approx{q(s)}$ (no uncertainty to reduce), so expected $KL = 0$.
 
 3. **Extrinsic > 0**
+
+    . We compute $\mathbb{E}_{q(o)}[−ln ⁡p(o∣C)]$.
+
+    . Unless our preferences $p(o∣C)$ put probability $\sim{1}$ on the actually observed outcome at every step, this expectation is **positive**. That’s why our utility bar moves, while the others don’t.
