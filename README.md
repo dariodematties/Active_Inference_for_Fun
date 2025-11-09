@@ -286,8 +286,25 @@ python run_gridworld_live_demo.py --episodes-random 4 --episodes-aif 3 --fps 12 
 https://github.com/user-attachments/assets/f199d457-7d89-4c75-bcbe-2354d41181f9
 
 
-5. ### Analyzing metrics (**Complexity, Accuracy, Extrinsic and Epistemic**) 
+5. ### Analyzing metrics (**Complexity, Accuracy, Extrinsic and Epistemic**)
+
+This section is to analyze how the main four terms defined in the previous section vary as we run an episode of this very simple grid world.
+The main idea is to demonstrate conceptually what are the main things that these four terms entail in regards to active inference.
+
+As shown in the examples bellow, when we run an episode, the only value greater than 0 is the extrinsic Utility throughout the whole episode while the others are all 0.
 
 
+```shell
+python run_gridworld_live_metrics.py --fps 10
+[Episode 1] return=1.00, steps=14
+[Episode 2] return=1.00, steps=33
+[Episode 3] return=1.00, steps=27
+All episodes complete: [(1.0, 14), (1.0, 33), (1.0, 27)]
+``` 
+
+![run_gridworld_live_metrics](run_gridworld_live_metrics.png)
 
 
+Why is this happening?
+
+Short answer: that pattern is exactly what we should see in our current setup (fully observable, deterministic dynamics, sharp prior), so nothing’s “wrong.”
