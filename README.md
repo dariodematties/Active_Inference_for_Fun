@@ -308,3 +308,10 @@ All episodes complete: [(1.0, 14), (1.0, 33), (1.0, 27)]
 Why is this happening?
 
 Short answer: that pattern is exactly what we should see in our current setup (fully observable, deterministic dynamics, sharp prior), so nothing’s “wrong.”
+
+Lets unfold this in more detail.
+
+1. **Fully observable A (≈ identity) & deterministic B**
+
+
+2. **Extrinsic > 0**
