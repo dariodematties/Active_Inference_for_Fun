@@ -313,5 +313,14 @@ Lets unfold this in more detail.
 
 1. **Fully observable A (≈ identity) & deterministic B**
 
+    . After each step we set the prior for the next step as $prior_s = B_uq_s$.
+   
+    . The new observation is perfectly informative: the posterior $q(s)$ collapses to the true state, which equals the predicted state.
+   
+    . $\\Rightarrow$ **Complexity** $D_{KL}({q(s)}\parallel{prior_s}) = 0$ (posterior matches prior).
 
-2. **Extrinsic > 0**
+    . With $A \approx identity, p(o_t∣s^*) = 1$ at the true state $\rightarrow −\mathbb{E}_q[ln⁡ p(o_t⁣∣s)] = 0$.
+
+    . **Epistemic** (1-step info gain) vanishes: for each possible $o, {q(s⁣∣o)}\approx{q(s)}$ (no uncertainty to reduce), so expected $KL = 0$.
+
+3. **Extrinsic > 0**
