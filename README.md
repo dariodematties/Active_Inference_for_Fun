@@ -356,3 +356,16 @@ python run_gridworld_live_metrics.py --b-noise 0.2 --fps 10
 All episodes complete: [(0.0, 200), (0.0, 200), (0.0, 200)]
 ```
 ![run_gridworld_live_metrics2](run_gridworld_live_metrics2.png)
+
+
+Combine A-noise with B-noise to also see **Accuracy/Epistemic** also let's keep preferences gentle so exploration isn’t crushed:
+
+```shell
+python run_gridworld_live_metrics.py --a-noise 0.5 --b-noise 0.5 --c-reward 0.1 --c-punish -0.1 --fps 12 --policy-len 6 --sophisticated --max-steps 10 
+[Episode 1] return=0.00, steps=10
+[Episode 2] return=0.00, steps=10
+[Episode 3] return=0.00, steps=10
+All episodes complete: [(0.0, 10), (0.0, 10), (0.0, 10)]
+```
+
+![run_gridworld_live_metrics3](run_gridworld_live_metrics3.png)
