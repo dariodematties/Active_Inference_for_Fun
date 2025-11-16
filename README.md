@@ -344,3 +344,15 @@ python run_gridworld_live_metrics.py --fps 10 --a-noise 0.2
 All episodes complete: [(1.0, 24), (1.0, 16), (1.0, 10)]
 ```
 ![run_gridworld_live_metrics1](run_gridworld_live_metrics1.png)
+
+
+Pure **B-noise** (no env slips), see **Complexity** move:
+
+```shell
+python run_gridworld_live_metrics.py --b-noise 0.2 --fps 10
+[Episode 1] return=0.00, steps=200
+[Episode 2] return=0.00, steps=200
+[Episode 3] return=0.00, steps=200
+All episodes complete: [(0.0, 200), (0.0, 200), (0.0, 200)]
+```
+![run_gridworld_live_metrics2](run_gridworld_live_metrics2.png)
