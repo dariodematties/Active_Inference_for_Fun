@@ -369,3 +369,16 @@ All episodes complete: [(0.0, 10), (0.0, 10), (0.0, 10)]
 ```
 
 ![run_gridworld_live_metrics3](run_gridworld_live_metrics3.png)
+
+
+Producing a **Complexity** spike inserting a random starting position (`--start-pos random`), plus non-zero **Accuracy** + **Epistemic** during re-localization with noisy actions (`--slip-prob 0.1`).
+
+```shell
+python run_gridworld_live_metrics.py --start-pos random --fps 1 --slip-prob 0.1
+[Episode 1] return=1.00, steps=8
+[Episode 2] return=1.00, steps=42
+[Episode 3] return=1.00, steps=42
+All episodes complete: [(1.0, 8), (1.0, 42), (1.0, 42)]
+```
+![run_gridworld_live_metrics4](run_gridworld_live_metrics4.png)
+
