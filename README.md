@@ -382,3 +382,18 @@ All episodes complete: [(1.0, 8), (1.0, 42), (1.0, 42)]
 ```
 ![run_gridworld_live_metrics4](run_gridworld_live_metrics4.png)
 
+You can also run some stats in this regard
+
+```shell
+python run_gridworld_metrics_stats.py --episodes 100 --workers 20 --a-noise 0.1 --b-noise 0.1 --c-reward 0.1 --c-punish -0.1 --max-steps 200 --policy-len 6 --sophisticated --cols 5 --rows 5 --reward-pos "4,4" --punish-pos "0,4"
+
+=== Summary ===
+ success_rate: 0.0
+  punish_rate: 0.0
+ timeout_rate: 1.0
+   avg_return: 0.0
+    avg_steps: 200.0
+counts: {'timeout': 100}
+
+Per-episode means (overall): Complexity=0.098, Accuracy=0.103, Extrinsic=3.219, Epistemic=0.002
+```
