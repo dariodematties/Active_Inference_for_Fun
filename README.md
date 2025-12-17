@@ -397,3 +397,23 @@ counts: {'timeout': 100}
 
 Per-episode means (overall): Complexity=0.098, Accuracy=0.103, Extrinsic=3.219, Epistemic=0.002
 ```
+
+## Tri-modal, orientation-aware agent
+
+```shell
+python run_nav3_live_demo.py --start-ori E --fps 12 --episodes 5 --rows 6 --cols 6 --reward-pos "5,5" --punish-pos "0,5" --policy-len 3
+[Episode 1] return=1.00, steps=92
+[Episode 2] return=1.00, steps=73
+[Episode 3] return=0.00, steps=200
+[Episode 4] return=1.00, steps=65
+[Episode 5] return=1.00, steps=37
+```
+
+
+https://github.com/user-attachments/assets/9e49e5ce-8e3c-460f-8947-732d99920b5b
+
+
+
+
+
+
