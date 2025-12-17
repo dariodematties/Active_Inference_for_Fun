@@ -397,3 +397,14 @@ counts: {'timeout': 100}
 
 Per-episode means (overall): Complexity=0.098, Accuracy=0.103, Extrinsic=3.219, Epistemic=0.002
 ```
+
+## Tri-modal, orientation-aware agent
+
+
+https://github.com/user-attachments/assets/9e49e5ce-8e3c-460f-8947-732d99920b5b
+
+
+
+
+
+
