@@ -420,6 +420,29 @@ Reason: in pymdp, transition matrices factorize over hidden-state factors. Since
 
 - 3 controls over the single factor: forward, turn_left, turn_right.
 
+### Run examples
+
+- Plain, deterministic sensing/dynamics, sophisticated inference:
+
+```shell
+python run_nav3_live_demo.py --sophisticated --start-ori E
+[Episode 1] return=1.00, steps=65
+```
+
+- With observation and model mismatch inside the agent (watch it reorient/localize):
+
+```shell
+python run_nav3_live_demo.py --a-noise 0.001 --b-noise 0.001 --sophisticated --policy-len 4 --start-ori N 
+[Episode 1] return=1.00, steps=69
+```
+
+- Start at a different place/orientation:
+
+```shell
+python run_nav3_live_demo.py --start-pos 2,1 --start-ori S
+[Episode 1] return=1.00, steps=79
+```
+
 ```shell
 python run_nav3_live_demo.py --start-ori E --fps 12 --episodes 5 --rows 6 --cols 6 --reward-pos "5,5" --punish-pos "0,5" --policy-len 3
 [Episode 1] return=1.00, steps=92
