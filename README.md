@@ -400,6 +400,26 @@ Per-episode means (overall): Complexity=0.098, Accuracy=0.103, Extrinsic=3.219, 
 
 ## Tri-modal, orientation-aware agent
 
+This is a great place to showcase Active Inference with controlled, informative sensing. The cleanest specification in pymdp (and the one I recommend) is:
+
+### Hidden state factors
+
+- F₁: a joint factor for (position × orientation) with size S = (N*M*4).
+
+Reason: in pymdp, transition matrices factorize over hidden-state factors. Since your F₁ (position) transition under forward depends on orientation (F₂), that cross-factor dependency would be awkward/imprecise unless we combine position & orientation into a single factor.
+
+### Outcome modalities
+
+- M₁ (distance): integer distance (0..max_range) to the first non-empty square in the current look direction; that terminal can only be one of {EDGE, RED, GREEN}.
+
+- M₂ (terminal class): the class of that terminal square in the look direction ∈ {EDGE, RED, GREEN}.
+
+- M₃ (current class): the class of the square the agent currently occupies ∈ {EMPTY, EDGE, RED, GREEN}.
+
+### Actions:
+
+- 3 controls over the single factor: forward, turn_left, turn_right.
+
 ```shell
 python run_nav3_live_demo.py --start-ori E --fps 12 --episodes 5 --rows 6 --cols 6 --reward-pos "5,5" --punish-pos "0,5" --policy-len 3
 [Episode 1] return=1.00, steps=92
