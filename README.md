@@ -420,6 +420,16 @@ Reason: in pymdp, transition matrices factorize over hidden-state factors. Since
 
 - 3 controls over the single factor: forward, turn_left, turn_right.
 
+### Preferences C:
+
+ - likes GREEN (reward) and dislikes RED (punish) via M3 (current cell class).
+ 
+ - M1/M2 are neutral by default (but you can make them informative to encourage curiosity).
+
+### Noise:
+ - optional A-noise (observation model noise) and
+ - B-noise (agent’s transition model mismatch).
+
 ### Run examples
 
 - Plain, deterministic sensing/dynamics, sophisticated inference:
