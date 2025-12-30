@@ -197,10 +197,14 @@ def _build_C(n_rows:int, n_cols:int,
 
     C1 = np.zeros((O1,), dtype=np.float64)  # neutral distances
     C2 = np.zeros((O2,), dtype=np.float64)  # neutral terminal class
+    C2[M2_GREEN] = pref_green   # prefer seeing green ahead
+    C2[M2_RED] = pref_red   # prefer not seeing red ahead
+    C2[M2_EDGE] = -0.1   # prefer not seeing edge ahead
     C3 = np.zeros((O3,), dtype=np.float64)
     C3[CLASS_GREEN] = pref_green
     C3[CLASS_RED]   = pref_red
-    # EDGE / EMPTY remain neutral
+    C3[CLASS_EDGE]   = -0.1
+    C3[CLASS_EMPTY]   = -0.1
 
     return C1, C2, C3
 
