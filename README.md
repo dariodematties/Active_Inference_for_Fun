@@ -466,7 +466,35 @@ python run_nav3_live_demo.py --start-ori E --fps 12 --episodes 5 --rows 6 --cols
 https://github.com/user-attachments/assets/9e49e5ce-8e3c-460f-8947-732d99920b5b
 
 
+## Metrics on Tri-modal, orientation-aware agent
 
+```shell
+python run_nav3_live_metrics.py --sophisticated --start-ori N --policy-len 3 --episodes 5 --cols 10 --rows 10 --punish-pos 0,9 --reward-pos 9,9 --start-pos 0,0 --a-noise 0.8 --b-noise 0.8
+[Episode 1] return=1.00, steps=88
+[Episode 2] return=1.00, steps=121
+[Episode 3] return=1.00, steps=82
+[Episode 4] return=1.00, steps=94
+[Episode 5] return=1.00, steps=75
+All episodes complete: [(1.0, 88), (1.0, 121), (1.0, 82), (1.0, 94), (1.0, 75)]
+```
+Rewarding viewing green, while penalizing viewing red.
 
+Slightly penalizing viewing edge, and staying in edge or empty.
+
+```python
+     C1 = np.zeros((O1,), dtype=np.float64)  # neutral distances
+     C2 = np.zeros((O2,), dtype=np.float64)  # neutral terminal class
++    C2[M2_GREEN] = pref_green   # prefer seeing green ahead
++    C2[M2_RED] = pref_red   # prefer not seeing red ahead
++    C2[M2_EDGE] = -0.1   # prefer not seeing edge ahead
+     C3 = np.zeros((O3,), dtype=np.float64)
+     C3[CLASS_GREEN] = pref_green
+     C3[CLASS_RED]   = pref_red
+-    # EDGE / EMPTY remain neutral
++    C3[CLASS_EDGE]   = -0.1
++    C3[CLASS_EMPTY]   = -0.1
+```
+
+https://github.com/user-attachments/assets/451a0e33-554a-4443-8bda-8cef63fb1c08
 
 
