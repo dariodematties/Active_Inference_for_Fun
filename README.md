@@ -497,4 +497,19 @@ Slightly penalizing viewing edge, and staying in edge or empty.
 
 https://github.com/user-attachments/assets/451a0e33-554a-4443-8bda-8cef63fb1c08
 
+## Run stats in this new model
+
+```shell
+python run_nav3_metrics_stats.py --episodes 50 --workers 10 --max-steps 50 --cols 10 --rows 10 --reward-pos 9,9 --punish-pos 0,9 --a-noise 0.1 --b-noise 0.1
+
+=== Summary ===
+ success_rate: 1.0
+  punish_rate: 0.0
+ timeout_rate: 0.0
+   avg_return: 1.0
+    avg_steps: 20.8
+counts: {'reward': 50}
+
+Per-episode means (overall): Complexity=0.098, Accuracy=0.243, Extrinsic=7.539, Epistemic=0.001
+```
 
